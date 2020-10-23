@@ -224,28 +224,16 @@ void Controller::receive(std::unique_ptr<Event> e)
 
     if(messageID == timeoutInd){
         handleTimePassed(*static_cast<EventT<TimeoutInd> const&>(*e));
+    } else if(messageID == directionInd) {
+        handleDirectionChange(*static_cast<EventT<DirectionInd> const&>(*e));
+    } else if(messageID == foodInd){
+ handleFoodPositionChange(*static_cast<EventT<FoodInd> const&>(*e));
+    }else if (messageID == foodResp){
+ handleNewFood(*static_cast<EventT<FoodResp> const&>(*e));
     } else {
- try {
-            handleDirectionChange(*dynamic_cast<EventT<DirectionInd> const&>(*e));
-        } catch (std::bad_cast&) {
-            try {
-                handleFoodPositionChange(*dynamic_cast<EventT<FoodInd> const&>(*e));
-            } catch (std::bad_cast&) {
-                try {
-                    handleNewFood(*dynamic_cast<EventT<FoodResp> const&>(*e));
-                } catch (std::bad_cast&) {
-                    throw UnexpectedEventException();
-                }
-            }
-        }
+throw UnexpectedEventException();
     }
 
-
-    try {
-        
-    } catch (std::bad_cast&) {
-       
-    }
 }
 
 } // namespace Snake
