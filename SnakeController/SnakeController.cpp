@@ -1,4 +1,6 @@
 #include "SnakeController.hpp"
+#include "MapController.hpp"
+
 
 #include <algorithm>
 #include <sstream>
@@ -68,7 +70,7 @@ bool Controller::isSegmentAtPosition(int x, int y) const
         [x, y](auto const& segment){ return segment.x == x and segment.y == y; });
 }
 
-bool Controller::isPositionOutsideMap(int x, int y) const
+bool Maper::isPositionOutsideMap(int x, int y) const
 {
     return x < 0 or y < 0 or x >= m_mapDimension.first or y >= m_mapDimension.second;
 }
@@ -189,7 +191,7 @@ void Controller::handleDirectionInd(std::unique_ptr<Event> e)
     }
 }
 
-void Controller::updateFoodPosition(int x, int y, std::function<void()> clearPolicy)
+void Maper::updateFoodPosition(int x, int y, std::function<void()> clearPolicy)
 {
     if (isSegmentAtPosition(x, y) || isPositionOutsideMap(x,y)) {
         m_foodPort.send(std::make_unique<EventT<FoodReq>>());
