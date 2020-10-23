@@ -31,6 +31,8 @@ public:
 
     void receive(std::unique_ptr<Event> e) override;
 
+    void firstCach(const std::unique_ptr<Event> e);
+
 private:
     struct Segment
     {
